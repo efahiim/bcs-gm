@@ -1,12 +1,12 @@
 // IMPORTS
 
 @font-face {
-  src: url(../fonts/BarlowCondensed-Bold.ttf);
+  src: url(../../public/assets/fonts/BarlowCondensed-Bold.ttf);
   font-family: mainFont;
 }
 
 @font-face {
-  src: url(../fonts/BarlowCondensed-Regular.ttf);
+  src: url(../../public/assets/fonts/BarlowCondensed-Regular.ttf);
   font-family: lesserFont;
 }
 
@@ -309,6 +309,7 @@ header {
     }
     a {
       margin: 0 .5rem;
+      text-decoration: none;
       svg {
         fill: @lightColor;
         transition: all .3s ease-in-out;
@@ -365,7 +366,7 @@ header {
   z-index: 0;
   grid-row: nav / header;
   grid-column: nav / header;
-  background: url("../images/canva.jpg") no-repeat;
+  background: url("../../public/assets/images/canva.jpg") no-repeat;
   background-size: cover;
   position: relative;
   &:before {

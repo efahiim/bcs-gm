@@ -9,8 +9,7 @@
 				GamerMind
 			{% endblock %}
 		</title>
-		<link rel="icon" href="images/favicon.png">
-		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		<link rel="icon" href="{{ asset('assets/images/favicon.png') }}">
 		{% block stylesheets %}
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
@@ -21,18 +20,20 @@
 	</head>
 	<body>
 		<!-- PRELOADER -->
-		<div class="preloader">
+		{# <div class="preloader">
 			<div class="loader">
 				<svg viewbox="0 0 80 80">
 					<rect x="8" y="8" width="64" height="64"></rect>
 				</svg>
 			</div>
-		</div>
+		</div> #}
 		<!-- PRELOADER -->
 
 		<!-- GRID CONTAINER -->
 		<div class="container">
             {% block body %}{% endblock %}
+			{% include 'partials/prefooter.html.twig' %}
+			{% include 'partials/footer.html.twig' %}
 		</div>
 		<!-- GRID CONTAINER END -->
 	</body>
