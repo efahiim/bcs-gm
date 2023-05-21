@@ -11,6 +11,8 @@
 /symfony.lock
 ###< symfony/framework-bundle ###
 
+/package-lock.json
+
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
