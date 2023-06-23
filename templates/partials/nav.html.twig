@@ -1,18 +1,24 @@
 <!-- TOP NAVIGATION -->
+{% set current_route = app.request.get('_route') %}
+
 <nav>
 	<div class="grid-template">
 		<div class="block-logo">
 			<span class="logo">
-				<img src="{{ asset('assets/images/logo.png') }}" alt="GamerMind"/>
+				<img src="{{ asset('assets/images/logo.png') }}" alt="GamerMind" />
 			</span>
 		</div>
 		<div class="block-nav">
 			<ul>
-				<li><a href="#" class="active">Home</a></li>
-				<li><a href="#">Games</a></li>
-				<li><a href="#">Community</a></li>
-				<li><a href="#">Shop</a></li>
-				<li><a href="#">Contact</a></li>
+				<li><a href="{{ path('app_home') }}" class="{{ current_route == 'app_home' ? 'active' : '' }}" class="active">Home</a></li>
+				<li><a href="{{ path('app_products') }}" class="{{ 'products' in current_route ? 'active' : '' }}">Shop</a></li>
+				<li><a href="{{ path('app_contact') }}" class="{{ current_route == 'app_contact' ? 'active' : '' }}">Contact</a></li>
+				{% if app.user %}
+					<li><a href="{{ path('app_logout') }}" class="">Logout</a></li>
+					{% else %}
+						<li><a href="{{ path('app_login') }}" class="{{ current_route == 'app_login' ? 'active' : '' }}">Login</a></li>
+						<li><a href="{{ path('app_register') }}" class="{{ current_route == 'app_register' ? 'active' : '' }}">Register</a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>

@@ -54,8 +54,47 @@ body, html
 
 ::-webkit-scrollbar-thumb {
   background: @lightColor;
+
   &:hover {
     background: @mainColor;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: @lightColor;
+}
+
+p,
+a {
+  color: @neutralColor;
+}
+
+h1 {
+  font-size: 2rem;
+
+  @media @large {
+    font-size: 3rem;
+  }
+}
+
+h2 {
+  font-size: 1.7rem;
+
+  @media @large {
+    font-size: 2.5rem;
+  }
+}
+
+h3 {
+  font-size: 1.3rem;
+
+  @media @large {
+    font-size: 1.7rem;
   }
 }
 
@@ -79,6 +118,7 @@ body, html
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+
   .loader {
     color: @mainColor;
     -webkit-animation-duration: 3s;
@@ -89,10 +129,12 @@ body, html
     -webkit-transform: scale(1.5);
     -ms-transform: scale(1.5);
     transform: scale(1.5);
+
     svg {
       display: block;
       width: 100%;
       height: 100%;
+
       rect {
         fill: none;
         stroke: @mainColor;
@@ -180,6 +222,7 @@ nav {
   position: fixed;
   width: 100%;
   transition: all .2s ease-in-out;
+
   .grid-template {
     display: grid;
     transition: all .2s ease-in-out;
@@ -187,40 +230,51 @@ nav {
     grid-template-rows: auto;
     grid-template-areas:
         "logo nav";
+
     .block-logo {
       grid-area: logo;
       display: flex;
       justify-content: flex-start;
       align-items: center;
     }
+
     .block-nav {
       grid-area: nav;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
       ul {
         list-style-type: none;
         display: flex;
+
         li {
           margin: 0 1rem;
+
           a {
             text-decoration: none;
             color: @lightColor;
             letter-spacing: 1px;
             transition: all .2s ease-in-out;
+
             &:hover {
               color: @mainColor;
             }
+
           }
+
           .active {
             color: @mainColor;
+            font-weight: bold;
           }
         }
       }
     }
   }
+
   &.stickynav {
     background: @darkColor;
+
     .grid-template {
       padding: 1em;
     }
@@ -234,6 +288,7 @@ nav {
 header {
   grid-area: header;
   position: relative;
+
   .grid-template {
     display: grid;
     height: 100%;
@@ -243,11 +298,13 @@ header {
         "slogan"
         "baseline"
         "button";
+
     .block-slogan {
       grid-area: slogan;
       display: flex;
       justify-content: center;
       align-items: flex-end;
+
       .slogan {
         color: @lightColor;
         font-family: mainFont;
@@ -256,11 +313,13 @@ header {
         font-weight: 900;
       }
     }
+
     .block-baseline {
       grid-area: baseline;
       display: flex;
       justify-content: center;
       align-items: flex-start;
+
       .baseline {
         color: @lightColor;
         font-family: lesserFont;
@@ -271,16 +330,19 @@ header {
         line-height: 1.4;
       }
     }
+
     .block-button {
       grid-area: button;
       display: flex;
       justify-content: center;
       align-items: flex-start;
     }
+
     p {
       margin: 2rem 0;
     }
   }
+
   .social {
     position: absolute;
     left: -100px;
@@ -289,6 +351,7 @@ header {
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
     z-index: 2;
+
     span {
       color: @lightColor;
       font-family: lesserFont;
@@ -297,6 +360,7 @@ header {
       padding-right: 7rem;
       position: relative;
       letter-spacing: 1px;
+
       &:after {
         position: absolute;
         content: '';
@@ -307,9 +371,11 @@ header {
         background: @lightColor;
       }
     }
+
     a {
       margin: 0 .5rem;
       text-decoration: none;
+
       svg {
         fill: @lightColor;
         transition: all .3s ease-in-out;
@@ -317,6 +383,7 @@ header {
         -ms-transform: rotate(-90deg);
         transform: rotate(-90deg);
       }
+
       &:hover {
         svg {
           fill: @mainColor;
@@ -334,6 +401,7 @@ header {
     transition: all .3s ease-in-out;
     width: 7.5em;
     text-align: center;
+
     a {
       text-decoration: none;
       color: @darkColor;
@@ -343,12 +411,15 @@ header {
       text-transform: uppercase;
       transition: all .3s ease-in-out;
     }
+
     &.button-style2 {
       background: @mainColor;
       transition: all .3s ease-in-out;
+
       a {
         color: @lightColor;
       }
+
       &.button-style3 {
         margin: 2rem 0;
       }
@@ -369,6 +440,7 @@ header {
   background: url("../../public/assets/images/canva.jpg") no-repeat;
   background-size: cover;
   position: relative;
+
   &:before {
     content: '';
     position: absolute;
@@ -379,6 +451,19 @@ header {
     height: 100%;
     background: rgba(0,0,0,.5);
   }
+
+  &.content {
+    height: 50vh;
+    background: url("../../public/assets/images/canvas.jpg") no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      color: @lightColor;
+      z-index: 1;
+    }
+  }
 }
 
 /********** CANVAS END **********/
@@ -387,6 +472,7 @@ header {
 
 aside.subheader {
   grid-area: subheader;
+
   .grid-template {
     padding: 5em 0;
     display: grid;
@@ -394,12 +480,15 @@ aside.subheader {
     grid-template-rows: auto;
     grid-template-areas:
         "info slider";
+
     .block-info {
       grid-area: info;
       padding: 1rem;
+
       p {
         margin: 1rem 0;
       }
+
       .sub-title {
         color: @mainColor;
         letter-spacing: 3px;
@@ -407,24 +496,29 @@ aside.subheader {
         text-transform: uppercase;
         font-family: lesserFont;
       }
+
       .main-title {
         color: @lightColor;
         text-transform: uppercase;
         font-size: 2.5rem;
         font-family: mainFont;
       }
+
       .summary {
         font-size: 1.2rem;
         max-width: 50%;
       }
     }
+
     .block-slider {
       grid-area: slider;
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
       .games {
         width: 100%;
+
         .poster {
           a {
             text-transform: capitalize;
@@ -441,3 +535,56 @@ aside.subheader {
     }
   }
 }
+
+/********** SUB HEADER END **********/
+
+/********** MAIN **********/
+
+main {
+  max-width: 90em;
+  padding: 2em;
+  margin: 0 auto;
+  width: 100%;
+
+  .product-catalog {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    .product {
+      width: 25%;
+      background: #101010;
+
+      img {
+        height: 450px;
+      }
+
+      a {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+
+        .product-description {
+          padding: 1rem 0 1rem 1rem;
+
+          h3 {
+            margin: 1rem 0;
+          }
+        }
+      }
+    }
+  }
+
+  .product-card {
+    display: flex;
+    align-items: stretch;
+
+    .product-info {
+      background: #101010;
+      flex: 1;
+    }
+  }
+}
+
+/********** MAIN END **********/

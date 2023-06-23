@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+
+    <!-- CANVAS -->
+    <section class="canvas content">
+        <h1>{{ product.title }}</h1>
+    </section>
+    <!-- CANVAS END -->
+
+    <!-- MAIN -->
+    <main>
+        <div class="product-card">
+            <img src="{{ product.image }}" alt="{{ product.title }}">
+            <div class="product-info">
+                <p>{{ product.description }}</p>
+                <p>{{ product.price }}</p>
+                <p>{{ productRating }}</p>
+            </div>
+        </div>
+        
+        <div class="product-reviews">
+            <h2>Reviews</h2>
+            {% if reviews|length > 0 %}
+                {% for review in reviews %}
+                    <p>{{ review.comment }}</p>
+                    <p>{{ review.rating }}</p>
+                {% endfor %}
+
+                {% else %}
+                    <p>There are currently no reviews available.</p>
+            {% endif %}
+        </div>
+    </main>
+    <!-- MAIN END -->
+{% endblock %}
