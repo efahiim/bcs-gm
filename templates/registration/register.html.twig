@@ -14,13 +14,16 @@
     <!-- MAIN -->
     <main>
         {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.plainPassword, {
-                label: 'Password'
-            }) }}
-            {{ form_row(registrationForm.agreeTerms) }}
-
-            <button type="submit" class="btn">Register</button>
+            <div class="security-form">
+                <div class="form-row">{{ form_row(registrationForm.email) }}</div>
+                <div class="form-row">
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                </div>
+                <div class="form-row inverse-flex">{{ form_row(registrationForm.agreeTerms) }}</div>
+                <button type="submit" class="security-button">Register</button>
+            </div>
         {{ form_end(registrationForm) }}
     </main>
     <!-- MAIN END -->

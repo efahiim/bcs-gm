@@ -18,6 +18,8 @@
 @neutralColor: #787878;
 @darkerColor: #000000;
 
+@transition: all .2s ease-in-out;
+
 @xsmall:  ~"only screen and (min-width: 320px)";
 @small:  ~"only screen and (min-width: 480px)";
 @medium:  	~"only screen and (min-width: 768px)";
@@ -69,7 +71,6 @@ h6 {
   color: @lightColor;
 }
 
-p,
 a {
   color: @neutralColor;
 }
@@ -521,8 +522,7 @@ aside.subheader {
 
         .poster {
           a {
-            text-transform: capitalize;
-            text-decoration: none;
+            text-transform: capitalize;text-decoration: none;
             font-family: mainFont;
             color: @lightColor;
             font-size: 1.4rem;
@@ -553,11 +553,18 @@ main {
     gap: 2rem;
 
     .product {
-      width: 25%;
       background: #101010;
 
+      @media @medium {
+        width: 48%;
+      }
+
+      @media @large {
+        width: 23%;
+      }
+
       img {
-        height: 450px;
+        height: 375px;
       }
 
       a {
@@ -581,10 +588,256 @@ main {
     align-items: stretch;
 
     .product-info {
+      padding: 2rem;
       background: #101010;
       flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p.title {
+        font-size: 1.3rem;
+        color: @lightColor;
+      }
+
+      .purchase {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      p.price {
+        font-size: 1.3rem;
+        color: @lightColor;
+        margin: 0;
+      }
+    }
+  }
+
+  .cart-anchor {
+    text-decoration: none;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    background: #101010;
+    padding-right: 2rem;
+
+    p {
+      text-align: center;
+      font-size: 1.3rem;
+    }
+  }
+
+  .empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-size: 1.3rem;
+    }
+  }
+
+  a.cart-button {
+    background: @mainColor;
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    text-transform: uppercase;
+    color: @lightColor;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    font-size: .9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: @transition;
+    margin-right: 1rem;
+    text-align: center;
+
+    &.alternate {
+      background: @lightColor;
+      color: @darkColor;
+    }
+  }
+
+  .item-quantity {
+    display: flex;
+    align-items: baseline;
+
+    a {
+      text-decoration: none;
+      font-size: 2rem;
+      color: @lightColor;
+    }
+
+    p {
+      color: @mainColor;
+      font-size: 1.3rem;
+      margin: 0 2rem;
+      background: @lightColor;
+      padding: 5px 15px;
+    }
+  }
+
+  .cart-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+
+    span {
+      font-size: 1.3rem;
+      color: @lightColor;
+    }
+  }
+
+  .review {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    background: #101010;
+    padding-right: 1rem;
+    margin: 1rem 0;
+
+    .review-number {
+      background: @lightColor;
+      color: @darkColor;
+      padding: 1rem;
+      font-weight: bold;
+    }
+
+    p.review-text {
+      font-size: 1.1rem;
+      flex: 1;
+      margin: 5px 0;
+      line-break: anywhere;
+    }
+  }
+
+  .product-reviews {
+    #review_form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 2rem;
+
+      div:first-child {
+        flex: 1;
+      }
+
+      div:nth-child(2) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        label {
+          margin-bottom: 10px;
+        }
+      }
+      input[type=text] {
+        width: 100%;
+        padding: 15px 5px;
+        outline: none;
+        border: 0;
+        border-radius: 0;
+        background: #101010;
+        color: @lightColor;
+      }
+    }
+
+    .review-button {
+      background: @mainColor;
+      padding: 0.8rem 1rem;
+      text-transform: uppercase;
+      color: @lightColor;
+      border: 0;
+      outline: none;
+      cursor: pointer;
+      font-size: .9rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+      margin: 1rem 0;
+      font-family: lesserFont;
     }
   }
 }
 
 /********** MAIN END **********/
+
+/********** SECURITY **********/
+
+.security-message {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  span {
+    color: @mainColor;
+  }
+
+  a {
+    color: @lightColor;
+  }
+}
+
+.security-form {
+  display: flex;
+  flex-direction: column;
+
+  @media @medium {
+    max-width: 50%;
+    margin: 0 auto;
+  }
+
+  @media @large {
+    max-width: 25%;
+  }
+
+  .form-row, .form-row div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    label {
+      margin-bottom: 0.5rem;
+    }
+
+    input {
+      padding: 10px 5px;
+      outline: none;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+
+  .form-row.inverse-flex div {
+    flex-direction: row;
+
+    label {
+      margin-bottom: 0.2rem;
+    }
+  }
+
+  .security-button {
+    background: @mainColor;
+    padding: 0.8rem 1rem;
+    text-transform: uppercase;
+    color: @lightColor;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+    font-size: .9rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    transition: @transition;
+    margin: 1rem 0;
+    font-family: lesserFont;
+  }
+}
+
+/********** SECURITY END **********/

@@ -13,36 +13,22 @@
 			</div>
 			<div class="block-button">
 				<div class="button button-style2 button-style3">
-					<a href="#">Browse more</a>
+					<a href="{{ path('app_products') }}">Browse more</a>
 				</div>
 			</div>
 		</div>
 		<div class="block-slider">
 			<div class="games">
-				<div class="poster">
-					<div class="poster-img">
-						<img src="{{ asset('assets/images/game1.jpg') }}" alt="GamerMind">
-					</div>
-					<a href="#">Game one</a>
-				</div>
-				<div class="poster">
-					<div class="poster-img">
-						<img src="{{ asset('assets/images/game2.jpg') }}" alt="GamerMind">
-					</div>
-					<a href="#">Game two</a>
-				</div>
-				<div class="poster">
-					<div class="poster-img">
-						<img src="{{ asset('assets/images/game3.jpg') }}" alt="GamerMind">
-					</div>
-					<a href="#">Game three</a>
-				</div>
-				<div class="poster">
-					<div class="poster-img">
-						<img src="{{ asset('assets/images/game4.jpg') }}" alt="GamerMind">
-					</div>
-					<a href="#">Game four</a>
-				</div>
+				{% if games %}
+					{% for game in games %}
+						<div class="poster">
+							<div class="poster-img">
+								<img src="{{ vich_uploader_asset(game, 'imageFile') }}" alt="{{ game.title }}">
+							</div>
+							<a href="/products/{{ game.id }}">{{ game.title }}</a>
+						</div>
+					{% endfor %}
+				{% endif %}
 			</div>
 		</div>
 	</div>

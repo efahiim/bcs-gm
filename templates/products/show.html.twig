@@ -14,11 +14,22 @@
     <!-- MAIN -->
     <main>
         <div class="product-card">
-            <img src="{{ product.image }}" alt="{{ product.title }}">
+            <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}">
             <div class="product-info">
-                <p>{{ product.description }}</p>
-                <p>{{ product.price }}</p>
-                <p>{{ productRating }}</p>
+                <div class="info">
+                    <p class="title">{{ product.title }}</p>
+                    <p>{{ product.description }}</p>
+                    {% for i in 1..productRating %}
+                        <svg fill="#f6e53e" width="25px" height="25px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <title>star</title>
+                            <path d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z"></path>
+                        </svg>
+                    {% endfor %}
+                </div>
+                <div class="purchase">
+                    <p class="price">Rs {{ (product.price / 100)|number_format(2, '.', ',') }}</p>
+                    <a href="{{ path('app_cart_add', { 'id': product.id }) }}" class="cart-button">Add to cart</a>
+                </div>
             </div>
         </div>
         
@@ -26,12 +37,28 @@
             <h2>Reviews</h2>
             {% if reviews|length > 0 %}
                 {% for review in reviews %}
-                    <p>{{ review.comment }}</p>
-                    <p>{{ review.rating }}</p>
+                    <div class="review">
+                        <div class="review-number">{{ loop.index }}</div>
+                        <p class="review-text">{{ review.comment }}</p>
+                        <div class="review-stars">
+                            {% for i in 1..review.rating %}
+                                <svg fill="#f6e53e" width="20px" height="20px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                                    <title>star</title>
+                                    <path d="M3.488 13.184l6.272 6.112-1.472 8.608 7.712-4.064 7.712 4.064-1.472-8.608 6.272-6.112-8.64-1.248-3.872-7.808-3.872 7.808z"></path>
+                                </svg>
+                            {% endfor %}
+                        </div>
+                    </div>
                 {% endfor %}
 
                 {% else %}
                     <p>There are currently no reviews available.</p>
+            {% endif %}
+            {% if app.user %}
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    <button type="submit" class="review-button">Add review</button>
+                {{ form_end(form) }}
             {% endif %}
         </div>
     </main>

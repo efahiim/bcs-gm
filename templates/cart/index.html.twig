@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+    <!-- CANVAS -->
+    <section class="canvas content">
+        <h1>Cart</h1>
+    </section>
+    <!-- CANVAS END -->
+
+    <!-- MAIN -->
+    <main>
+        {% if cart|length > 0 %}
+            {% set total = null %}
+            {% for item in cart %}
+                {% set total = total + (item.product.price * item.quantity) %}
+                <div class="cart-item">
+                    <a href="/products/{{ item.product.id }}" class="cart-anchor">
+                        <img src="{{ vich_uploader_asset(item.product, 'imageFile') }}" alt="{{ item.product.title }}" width="150">
+                    </a>
+                    <p>{{ item.product.title }}</p>
+                    <p>Rs {{ (total / 100)|number_format(2, '.', ',') }}</p>
+                    <div class="item-quantity">
+                        <a href="{{ path('app_cart_decrement', { 'id': item.product.id }) }}" data-decrement>-</a>
+                        <p class="quantity">{{ item.quantity }}</p>
+                        <a href="{{ path('app_cart_add', { 'id': item.product.id }) }}" data-increment>+</a>
+                    </div>
+                    <a href="{{ path('app_cart_delete', { 'id': item.product.id }) }}">
+                        <svg fill="#d73f2b" width="32px" height="32px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z"/></svg>
+                    </a>
+                </div>
+            {% endfor %}
+            <div class="cart-info">
+                <span>Number of items: {{ cart|length }}</span>
+                <span>Total: Rs {{ (total / 100)|number_format(2, '.', ',') }}</span>
+            </div>
+            <a href="{{ path('app_cart_clear') }}" class="cart-button">Clear cart</a>
+            <a href="{{ path('app_products') }}" class="cart-button alternate">Continue shopping</a>
+            {% else %}
+                <div class="empty-cart">
+                    <p>There are currently no items in your cart.</p>
+                    <a href="{{ path('app_products') }}" class="cart-button">Go to shop</a>
+                </div>
+        {% endif %}
+    </main>
+    <!-- MAIN END -->
+{% endblock %}

@@ -10,12 +10,21 @@
 				developed mainly by its studio Ubisoft Montreal using the game engine Anvil and its more advanced derivatives.</p>
 		</div>
 		<div class="block-button">
-			<div class="button">
-				<a href="#">Learn more</a>
-			</div>
-			<div class="button button-style2">
-				<a href="#">Buy now</a>
-			</div>
+			{% if app.user %}
+				<div class="button">
+					<a href="{{ path('app_logout') }}">Logout</a>
+				</div>
+				<div class="button button-style2">
+					<a href="{{ path('app_products') }}">Shop</a>
+				</div>
+				{% else %}
+					<div class="button">
+						<a href="{{ path('app_register') }}">Register</a>
+					</div>
+					<div class="button button-style2">
+						<a href="{{ path('app_login') }}">Login</a>
+					</div>
+			{% endif %}
 		</div>
 	</div>
 	<div class="social">
