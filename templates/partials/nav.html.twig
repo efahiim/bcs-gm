@@ -27,6 +27,9 @@
 						</svg>
 					</a>
 				</li>
+				{% if app.user %}
+					<li>{{ app.user.email }}</li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>

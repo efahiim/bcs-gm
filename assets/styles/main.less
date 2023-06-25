@@ -17,6 +17,7 @@
 @lightColor: #ffffff;
 @neutralColor: #787878;
 @darkerColor: #000000;
+@altDarkColor: #101010;
 
 @transition: all .2s ease-in-out;
 
@@ -545,6 +546,7 @@ main {
   padding: 2em;
   margin: 0 auto;
   width: 100%;
+  min-height: 38.5vh;
 
   .product-catalog {
     display: flex;
@@ -553,7 +555,7 @@ main {
     gap: 2rem;
 
     .product {
-      background: #101010;
+      background: @altDarkColor;
 
       @media @medium {
         width: 48%;
@@ -573,7 +575,7 @@ main {
         text-decoration: none;
 
         .product-description {
-          padding: 1rem 0 1rem 1rem;
+          padding: 1rem;
 
           h3 {
             margin: 1rem 0;
@@ -589,11 +591,16 @@ main {
 
     .product-info {
       padding: 2rem;
-      background: #101010;
+      background: @altDarkColor;
       flex: 1;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 2rem;
+
+      .info {
+        flex: 2.5;
+      }
 
       p.title {
         font-size: 1.3rem;
@@ -602,8 +609,10 @@ main {
 
       .purchase {
         display: flex;
+        justify-content: flex-end;
         align-items: center;
         gap: 1.5rem;
+        flex: 1;
       }
 
       p.price {
@@ -616,6 +625,7 @@ main {
 
   .cart-anchor {
     text-decoration: none;
+    display: contents;
   }
 
   .cart-item {
@@ -623,7 +633,7 @@ main {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 2rem;
-    background: #101010;
+    background: @altDarkColor;
     padding-right: 2rem;
 
     p {
@@ -700,7 +710,7 @@ main {
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    background: #101010;
+    background: @altDarkColor;
     padding-right: 1rem;
     margin: 1rem 0;
 
@@ -740,13 +750,14 @@ main {
           margin-bottom: 10px;
         }
       }
+
       input[type=text] {
         width: 100%;
         padding: 15px 5px;
         outline: none;
         border: 0;
         border-radius: 0;
-        background: #101010;
+        background: @altDarkColor;
         color: @lightColor;
       }
     }
@@ -841,3 +852,16 @@ main {
 }
 
 /********** SECURITY END **********/
+
+/********** FOOTER **********/
+
+footer {
+  padding: 1rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: @altDarkColor;
+}
+
+/********** FOOTER END **********/

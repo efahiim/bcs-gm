@@ -37,6 +37,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Review::class, orphanRemoval: true)]
     private Collection $reviews;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Address $address = null;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -76,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        // $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -138,6 +141,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $review->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(Address $address): static
+    {
+        // set the owning side of the relation if necessary
+        if ($address->getUser() !== $this) {
+            $address->setUser($this);
+        }
+
+        $this->address = $address;
 
         return $this;
     }

@@ -28,6 +28,12 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/account/{id}', name: 'app_account')]
+    public function account(): Response
+    {
+        return $this->render('security/account.html.twig');
+    }
+
     #[Route('/contact', name: 'app_contact')]
     public function contact(): Response
     {
