@@ -43,6 +43,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Address $address = null;
 
+    #[ORM\Column]
+    private ?bool $locked = null;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -173,6 +176,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function isLocked(): ?bool
+    {
+        return $this->locked;
+    }
+
+    public function setLocked(bool $locked): static
+    {
+        $this->locked = $locked;
 
         return $this;
     }
