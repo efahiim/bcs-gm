@@ -17,7 +17,8 @@ class ReviewFormType extends AbstractType
             ->add('comment', TextType::class, [
                 'attr' => [
                     'class' => 'review-input',
-                    'placeholder' => 'Add a review...'
+                    'placeholder' => 'Add a review...',
+                    'autocomplete' => 'off'
                 ],
                 'label' => false
             ])

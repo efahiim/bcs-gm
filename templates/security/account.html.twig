@@ -13,6 +13,18 @@
 
     <!-- MAIN -->
     <main>
+        {{ form_start(form) }}
+        <div class="security-form">
+            <h2>Add/Edit your details</h2>
+            <div class="form-row">{{ form_row(form.firstName) }}</div>
+            <div class="form-row">{{ form_row(form.lastName) }}</div>
+            <div class="form-row">{{ form_row(form.street) }}</div>
+            <div class="form-row">{{ form_row(form.city) }}</div>
+            <div class="form-row">{{ form_row(form.zipCode) }}</div>
+            <div class="form-row">{{ form_row(form.country) }}</div>
+            <button type="submit" class="security-button">Save</button>
+        </div>
+        {{ form_end(form) }}
     </main>
     <!-- MAIN END -->
 {% endblock %}

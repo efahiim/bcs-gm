@@ -31,6 +31,6 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Products', 'fa-solid fa-gamepad');
         yield MenuItem::linkToCrud('Reviews', 'fa-solid fa-comment', Review::class);
-        yield MenuItem::linkToCrud('Users', 'fa-solid fa-users', User::class);
+        yield MenuItem::linkToCrud('Users', 'fa-solid fa-users', User::class)->setPermission('ROLE_ADMIN');
     }
 }

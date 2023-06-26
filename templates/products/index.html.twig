@@ -19,7 +19,7 @@
             <div class="product-catalog">
                 {% for game in games %}
                     <div class="product">
-                        <a href="/products/{{ game.id }}">
+                        <a href="{{ path('app_product', { 'id': game.id }) }}">
                             <img src="{{ vich_uploader_asset(game, 'imageFile') }}" alt="{{ game.title }}">
                             <div class="product-description">
                                 <h3>{{ game.title }}</h3>
@@ -37,7 +37,7 @@
             <div class="product-catalog">
                 {% for device in devices %}
                     <div class="product">
-                        <a href="/products/{{ device.id }}">
+                        <a href="{{ path('app_product', { 'id': device.id }) }}">
                             <img src="{{ vich_uploader_asset(device, 'imageFile') }}" alt="{{ device.title }}">
                             <div class="product-description">
                                 <h3>{{ device.title }}</h3>

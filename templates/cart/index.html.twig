@@ -18,7 +18,7 @@
                 {% if item.product %}
                     {% set total = total + (item.product.price * item.quantity) %}
                     <div class="cart-item">
-                        <a href="/products/{{ item.product.id }}" class="cart-anchor">
+                        <a href="{{ path('app_product', { 'id': item.product.id }) }}" class="cart-anchor">
                             <img src="{{ vich_uploader_asset(item.product, 'imageFile') }}" alt="{{ item.product.title }}" width="150">
                         </a>
                         <p>{{ item.product.title }}</p>

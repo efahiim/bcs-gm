@@ -68,6 +68,7 @@ class ProductController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $newReview = $form->getData();
+            
             $this->em->persist($newReview);
             $this->em->flush();
 

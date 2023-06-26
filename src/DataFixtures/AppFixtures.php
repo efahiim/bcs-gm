@@ -19,6 +19,7 @@ class AppFixtures extends Fixture
         $user = new User();
         $user
             ->setEmail("admin@gamermind.com")
+            ->setUsername("gmadmin")
             ->setPassword('gmadmin')
             ->setRoles([
                 'ROLE_ADMIN',

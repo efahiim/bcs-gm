@@ -13,8 +13,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 class Product
 {
-    const TYPE_GAME = 'game';
-    const TYPE_DEVICE = 'device';
+    const TYPE_GAME = 'Game';
+    const TYPE_DEVICE = 'Device';
     const TYPE_ENUM = [
         self::TYPE_DEVICE,
         self::TYPE_GAME
@@ -23,7 +23,7 @@ class Product
     public static function getTypeChoice(): array
     {
         return array_combine( array_map(static function($enum) {
-            return "enum.$enum";
+            return "$enum";
         }, self::TYPE_ENUM), self::TYPE_ENUM);
     }
 
@@ -47,7 +47,7 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(length: 255, columnDefinition: "ENUM('game', 'device')")]
+    #[ORM\Column(length: 255, columnDefinition: "ENUM('Game', 'Device')")]
     private ?string $type = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Review::class)]
