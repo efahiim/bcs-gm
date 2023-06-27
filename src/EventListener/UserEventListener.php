@@ -22,18 +22,27 @@ class UserEventListener
 
     public function preUpdate(User $user, PreUpdateEventArgs $event): void
     {
-        $this->preWrite($user);
+        $changes = $event->getEntityChangeSet();
+        $this->preWrite($user,true, $changes);
     }
 
-    private function preWrite(User $user): void
+    private function preWrite(User $user, bool $isUpdate = false, array $changes = []): void
     {
-        if (!empty($user->getPassword())) {
+        $condition = true;
+        if ($isUpdate) {
+           $condition = array_key_exists('password', $changes) && !is_null($changes['password'][1]);
+        }
+        if ($condition &&  !empty($user->getPassword())) {
             $password = $this->passwordHasher
                 ->hashPassword(
                     $user,
                     $user->getPassword()
                 );
             $user->setPassword($password);
+        }
+
+        if ($isUpdate && !$condition) {
+            $user->setPassword($changes['password'][0]);
         }
     }
 }
