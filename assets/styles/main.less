@@ -707,7 +707,7 @@ main {
   .review {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     flex-wrap: wrap;
     gap: 2rem;
     background: @altDarkColor;
@@ -719,6 +719,9 @@ main {
       color: @darkColor;
       padding: 1rem;
       font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     p.review-text {
@@ -726,6 +729,13 @@ main {
       flex: 1;
       margin: 5px 0;
       line-break: anywhere;
+      display: flex;
+      align-items: center;
+    }
+
+    .review-stars {
+      display: flex;
+      align-items: center;
     }
   }
 
@@ -775,6 +785,54 @@ main {
       letter-spacing: 1px;
       margin: 1rem 0;
       font-family: lesserFont;
+    }
+  }
+
+  .user-requests {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3rem;
+
+    .request {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      background: @altDarkColor;
+      padding-right: 1rem;
+      margin: 1rem 0;
+      gap: 2rem;
+
+      .request-number {
+        color: @darkColor;
+        background: @lightColor;
+        padding: 1rem;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .request-title {
+        color: @lightColor;
+        font-size: 1.2rem;
+        flex: 1;
+      }
+
+      .request-status {
+        font-size: 1.2rem;
+
+        &.pending {
+          color: yellow;
+        }
+
+        &.approved {
+          color: green;
+        }
+
+        &.rejected {
+          color: red;
+        }
+      }
     }
   }
 }
@@ -848,6 +906,19 @@ main {
     transition: @transition;
     margin: 1rem 0;
     font-family: lesserFont;
+  }
+
+  .send-request {
+    font-size: 1.2rem;
+    color: @lightColor;
+  }
+
+  &.alt-width {
+    margin: 0;
+
+    @media @large {
+      max-width: 50%;
+    }
   }
 }
 

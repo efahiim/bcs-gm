@@ -34,6 +34,7 @@ security:
     access_control:
         - { path: ^/admin, roles: ROLE_MODERATOR }
         - { path: ^/account, roles: ROLE_USER }
+        - { path: ^/requests, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_MODERATOR:     [ROLE_USER]

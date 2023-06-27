@@ -15,6 +15,7 @@ class Review
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $comment = null;
 
     #[Assert\Range(

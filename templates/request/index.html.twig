@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Requests{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+
+    <!-- CANVAS -->
+    <section class="canvas content">
+        <h1>Requests</h1>
+    </section>
+    <!-- CANVAS END -->
+
+    <!-- MAIN -->
+    <main>
+        {% if requests %}
+            <div class="user-requests">
+                {% for request in requests %}
+                    <div class="request">
+                        <div class="request-number">{{ loop.index }}</div>
+                        <p class="request-title">{{ request.title }}</p>
+                        {% if request.status == 'Pending' %}
+                            <p class="request-status pending">{{ request.status }}</p>
+                            {% elseif request.status == 'Approved' %}
+                                <p class="request-status approved">{{ request.status }}</p>
+                            {% else %} 
+                                <p class="request-status rejected">{{ request.status }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>  
+        {% endif %}
+        {{ form_start(form) }}
+        <div class="security-form alt-width">
+            <p class="send-request">Send a request to add a new game to the shop</p>
+            <div class="form-row">{{ form_row(form.title) }}</div>
+            <button type="submit" class="security-button">Send request</button>
+        </div>
+        {{ form_end(form) }}
+    </main>
+    <!-- MAIN END -->
+{% endblock %}

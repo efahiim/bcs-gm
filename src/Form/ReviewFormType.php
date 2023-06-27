@@ -20,7 +20,8 @@ class ReviewFormType extends AbstractType
                     'placeholder' => 'Add a review...',
                     'autocomplete' => 'off'
                 ],
-                'label' => false
+                'label' => false,
+                'required' => false
             ])
             ->add('rating', RangeType::class, [
                 'attr' => [

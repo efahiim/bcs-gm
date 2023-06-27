@@ -15,6 +15,7 @@ class Product
 {
     const TYPE_GAME = 'Game';
     const TYPE_DEVICE = 'Device';
+    
     const TYPE_ENUM = [
         self::TYPE_DEVICE,
         self::TYPE_GAME
