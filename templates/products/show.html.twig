@@ -14,7 +14,7 @@
     <!-- MAIN -->
     <main>
         <div class="product-card">
-            <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}" width="270" />
+            <img src="{{ product.image ? vich_uploader_asset(product, 'imageFile') : asset('assets/images/default.jpg') }}" alt="{{ product.title }}" width="270" />
             <div class="product-info">
                 <div class="info">
                     <p class="title">{{ product.title }}</p>

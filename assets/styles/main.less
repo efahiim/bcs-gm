@@ -269,6 +269,47 @@ nav {
             color: @mainColor;
             font-weight: bold;
           }
+
+          &.dropdown {
+            position: relative;
+
+            ul {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              background: @darkColor;
+              padding: 10px 0 15px 0;
+              position: absolute;
+              left: 0;
+              top: 100%;
+              opacity: 0;
+              transition: @transition;
+
+              li {
+                padding: 5px;
+
+                a.active {
+                  font-weight: normal;
+                }
+              }
+            }
+
+            .user {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 10px;
+
+              span {
+                color: @mainColor;
+                line-height: 1.2;
+              }
+            }
+
+            &:hover ul {
+              opacity: 1;
+            }
+          }
         }
       }
     }
@@ -398,10 +439,6 @@ header {
 .block-button {
   .button {
     margin: 0 1rem;
-    padding: 0.8rem 1rem;
-    background: @lightColor;
-    transition: all .3s ease-in-out;
-    width: 7.5em;
     text-align: center;
 
     a {
@@ -411,14 +448,15 @@ header {
       font-size: .9rem;
       letter-spacing: 1px;
       text-transform: uppercase;
-      transition: all .3s ease-in-out;
+      padding: 0.8rem 1rem;
+      width: 8em;
+      display: block;
+      background: @lightColor;
     }
 
     &.button-style2 {
-      background: @mainColor;
-      transition: all .3s ease-in-out;
-
       a {
+        background: @mainColor;
         color: @lightColor;
       }
 
@@ -533,6 +571,12 @@ aside.subheader {
           }
         }
       }
+
+      .poster-img, .slick-slide img {
+        height: 356px;
+        width: 270px;
+        object-fit: cover;
+      }
     }
   }
 }
@@ -567,6 +611,7 @@ main {
 
       img {
         height: 375px;
+        object-fit: cover;
       }
 
       a {
