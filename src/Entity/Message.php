@@ -26,9 +26,16 @@ class Message
     #[Assert\NotBlank]
     private ?string $message = null;
 
-    #[Gedmo\Timestampable(on:"create")]
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column]
     private ?\DateTimeImmutable $sent_at = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reply = null;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $replied_at = null;
 
     public function getId(): ?int
     {
@@ -79,6 +86,35 @@ class Message
     public function setSentAt(\DateTimeImmutable $sent_at): static
     {
         $this->sent_at = $sent_at;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->message;
+    }
+
+    public function getReply(): ?string
+    {
+        return $this->reply;
+    }
+
+    public function setReply(?string $reply): static
+    {
+        $this->reply = $reply;
+
+        return $this;
+    }
+
+    public function getRepliedAt(): ?\DateTimeImmutable
+    {
+        return $this->replied_at;
+    }
+
+    public function setRepliedAt(?\DateTimeImmutable $replied_at): static
+    {
+        $this->replied_at = $replied_at;
 
         return $this;
     }

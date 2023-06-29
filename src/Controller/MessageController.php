@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
-class MessagesController extends AbstractController
+class MessageController extends AbstractController
 {
     private $em;
     private $security;
@@ -32,6 +32,7 @@ class MessagesController extends AbstractController
         if ($userChat == null) {
             $userChat = new Chat();
             $userChat->setCustomer($user);
+            $userChat->setCustomerUsername($user->getUsername());
             $this->em->persist($userChat);
             $this->em->flush();
         };

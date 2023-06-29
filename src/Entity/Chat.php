@@ -22,6 +22,9 @@ class Chat
     #[ORM\OneToMany(mappedBy: 'chat', targetEntity: Message::class, orphanRemoval: true)]
     private Collection $messages;
 
+    #[ORM\Column(length: 255)]
+    private ?string $customer_username = null;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -72,5 +75,22 @@ class Chat
         }
 
         return $this;
+    }
+
+    public function getCustomerUsername(): ?string
+    {
+        return $this->customer_username;
+    }
+
+    public function setCustomerUsername(string $customer_username): static
+    {
+        $this->customer_username = $customer_username;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->customer->getUsername();
     }
 }

@@ -13,12 +13,18 @@
 
     <!-- MAIN -->
     <main>
-        {% if messages %}
-            <div class="user-messages">
-                {% for message in messages %}
-                    <p>{{ message.message }}</p>
-                {% endfor %}
-            </div>  
+        {% if messages|length > 0 %}
+            <h2>Continue your conversation</h2>
+            {% for message in messages %}
+                <div class="user-message">
+                    <p><span class="message-time">{{ message.sentAt|format_datetime('none', 'short') }} </span>{{ message.message }}</p>
+                    {% if message.reply %}
+                        <p class="reply">{{ message.reply }} <span class="message-time">{{ message.repliedAt|format_datetime('none', 'short') }}</span></p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>Begin a conversation</h2>
         {% endif %}
         {{ form_start(form) }}
             <div class="security-form full-width">
