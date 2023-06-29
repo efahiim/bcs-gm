@@ -35,6 +35,8 @@ security:
         - { path: ^/admin, roles: ROLE_MODERATOR }
         - { path: ^/account, roles: ROLE_USER }
         - { path: ^/requests, roles: ROLE_USER }
+        - { path: ^/messages, roles: ROLE_USER }
+        - { path: ^/orders, roles: ROLE_USER }
 
     role_hierarchy:
         ROLE_MODERATOR:     [ROLE_USER]
