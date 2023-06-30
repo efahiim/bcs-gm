@@ -6,6 +6,7 @@ use App\Entity\Review;
 use App\Entity\Request;
 use App\Entity\User;
 use App\Entity\Message;
+use App\Entity\Order;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -35,6 +36,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Reviews', 'fa-solid fa-comment', Review::class);
         yield MenuItem::linkToCrud('Requests', 'fa-solid fa-arrow-up-wide-short', Request::class);
         yield MenuItem::linkToCrud('Messages', 'fa-solid fa-message', Message::class);
+        yield MenuItem::linkToCrud('Orders', 'fa-solid fa-cart-shopping', Order::class);
         yield MenuItem::linkToCrud('Users', 'fa-solid fa-users', User::class)->setPermission('ROLE_ADMIN');
     }
 }

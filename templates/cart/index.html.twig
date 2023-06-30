@@ -14,15 +14,19 @@
     <main>
         {% if cart|length > 0 %}
             {% set total = null %}
+            {% set totalPerItem = null %}
+            {% set numberOfItems = null %}
             {% for item in cart %}
                 {% if item.product %}
                     {% set total = total + (item.product.price * item.quantity) %}
+                    {% set totalPerItem = item.product.price * item.quantity %}
+                    {% set numberOfItems = numberOfItems + item.quantity %}
                     <div class="cart-item">
                         <a href="{{ path('app_product', { 'id': item.product.id }) }}" class="cart-anchor">
                             <img src="{{ vich_uploader_asset(item.product, 'imageFile') }}" alt="{{ item.product.title }}" width="150">
                         </a>
                         <p>{{ item.product.title }}</p>
-                        <p>Rs {{ (total / 100)|number_format(2, '.', ',') }}</p>
+                        <p>Rs {{ (totalPerItem / 100)|number_format(2, '.', ',') }}</p>
                         <div class="item-quantity">
                             <a href="{{ path('app_cart_decrement', { 'id': item.product.id }) }}" data-decrement>-</a>
                             <p class="quantity">{{ item.quantity }}</p>
@@ -35,11 +39,12 @@
                 {% endif %}
             {% endfor %}
             <div class="cart-info">
-                <span>Number of items: {{ cart|length }}</span>
+                <span>Number of items: {{ numberOfItems }}</span>
                 <span>Total: Rs {{ (total / 100)|number_format(2, '.', ',') }}</span>
             </div>
             <a href="{{ path('app_cart_clear') }}" class="cart-button">Clear cart</a>
             <a href="{{ path('app_products') }}" class="cart-button alternate">Continue shopping</a>
+            <a href="{{ path('app_order') }}" class="cart-button">Confirm order</a>
             {% else %}
                 <div class="empty-cart">
                     <p>There are currently no items in your cart.</p>

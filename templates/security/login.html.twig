@@ -20,7 +20,7 @@
 
             {% if app.user %}
                 <div class="security-message">
-                    You are logged in as <span>{{ app.user.userIdentifier }}</span>, do you want to <a href="{{ path('app_logout') }}">logout</a>?
+                    You are logged in as <span>{{ app.user.username }}</span>, do you want to <a href="{{ path('app_logout') }}">logout</a>?
                 </div>
             {% endif %}
 
