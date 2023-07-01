@@ -26,7 +26,7 @@
                             <img src="{{ vich_uploader_asset(item.product, 'imageFile') }}" alt="{{ item.product.title }}" width="150">
                         </a>
                         <p>{{ item.product.title }}</p>
-                        <p>${{ (totalPerItem / 100)|number_format(2, '.', ',') }}</p>
+                        <p>${{ totalPerItem }}</p>
                         <div class="item-quantity">
                             <a href="{{ path('app_cart_decrement', { 'id': item.product.id }) }}" data-decrement>-</a>
                             <p class="quantity">{{ item.quantity }}</p>
@@ -40,7 +40,7 @@
             {% endfor %}
             <div class="cart-info">
                 <span>Number of items: {{ numberOfItems }}</span>
-                <span>Total: ${{ (total / 100)|number_format(2, '.', ',') }}</span>
+                <span>Total: ${{ total }}</span>
             </div>
             <a href="{{ path('app_cart_clear') }}" class="cart-button">Clear cart</a>
             <a href="{{ path('app_products') }}" class="cart-button alternate">Continue shopping</a>

@@ -11,6 +11,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->createSuperAdmin($manager);
+        $this->createModerator($manager);
     }
 
     private function createSuperAdmin($manager)
@@ -18,11 +19,28 @@ class AppFixtures extends Fixture
         $user = new User();
         $user
             ->setEmail("admin@gamermind.com")
-            ->setUsername("gmadmin")
-            ->setPassword('gmadmin')
+            ->setUsername("admin")
+            ->setPassword('admin')
             ->setRoles([
                 'ROLE_ADMIN',
                 'ROLE_SUPER_ADMIN'
+            ])
+            ->setLocked(false);
+
+        $manager->persist($user);
+        $manager->flush();
+    }
+
+    private function createModerator($manager)
+    {
+        $user = new User();
+        $user
+            ->setEmail("moderator@gamermind.com")
+            ->setUsername("moderator")
+            ->setPassword('moderator')
+            ->setRoles([
+                'ROLE_USER',
+                'ROLE_MODERATOR'
             ])
             ->setLocked(false);
 

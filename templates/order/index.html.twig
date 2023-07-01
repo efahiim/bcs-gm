@@ -31,13 +31,13 @@
                         </a>
                         <p>{{ item.product.title }}</p>
                         <p>Qty: {{ item.quantity }}</p>
-                        <p>${{ (totalPerItem / 100)|number_format(2, '.', ',') }}</p>
+                        <p>${{ totalPerItem }}</p>
                     </div>
                 {% endif %}
             {% endfor %}
             <div class="cart-info">
                 <span>Number of items: {{ numberOfItems }}</span>
-                <span>Total: ${{ (total / 100)|number_format(2, '.', ',') }}</span>
+                <span>Total: ${{ total }}</span>
             </div>
             <button type="submit" class="order-button">Checkout & Pay</button>
         {{ form_end(form) }}

@@ -30,34 +30,63 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        $users = $this->em->getRepository(User::class)->findAll();
+        $totalUsers = count($users);
+        $products = $this->em->getRepository(Product::class)->findAll();
+        $totalProducts = count($products) > 0 ? count($products) : 0;
+        $totalGames = count($this->em->getRepository(Product::class)->findBy(['type' => 'game'], ['type' => 'ASC']));
+        $totalDevices = count($this->em->getRepository(Product::class)->findBy(['type' => 'device'], ['type' => 'ASC']));
+        $reviews = $this->em->getRepository(Review::class)->findAll();
+        $totalReviews = count($reviews) > 0 ? count($reviews) : 0;
+        $requests = $this->em->getRepository(Request::class)->findAll();
+        $totalRequests = count($requests) > 0 ? count($requests) : 0;
+        $messages = $this->em->getRepository(Message::class)->findAll();
+        $totalMessages = count($messages) > 0 ? count($messages) : 0;
         $orders = $this->em->getRepository(Order::class)->findAll();
-        $revenue = 0;
+        $totalOrders = 0;
+        $totalRevenue = 0;
 
         foreach ($orders as $order) {
             if ($order->getStatus() === 'Paid') {
-                $revenue += $order->getTotal();
+                $totalOrders += 1;
+                $totalRevenue += $order->getTotal();
             }
         }
 
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(ProductCrudController::class)->generateUrl());
-        return $this->render('admin/index.html.twig', [
-            'revenue' => $revenue,
-            'gamesChart' => $this->createGamesChart(),
-            'devicesChart' => $this->createDevicesChart()
-        ]);
+        $user = $this->getUser();
+        $userRoles = $user->getRoles();
+
+        if (in_array('ROLE_ADMIN', $userRoles)) {
+            return $this->render('admin/index.html.twig', [
+                'totalUsers' => $totalUsers,
+                'totalProducts' => $totalProducts,
+                'totalReviews' => $totalReviews,
+                'totalRequests' => $totalRequests,
+                'totalMessages' => $totalMessages,
+                'totalOrders' => $totalOrders,
+                'totalRevenue' => $totalRevenue,
+                'totalGames' => $totalGames,
+                'totalDevices' => $totalDevices,
+                'gamesChart' => $this->createGamesChart(),
+                'devicesChart' => $this->createDevicesChart()
+            ]);
+        } else {
+            $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+
+            return $this->redirect($adminUrlGenerator->setController(ProductCrudController::class)->generateUrl());
+        }
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('GAMERMIND')
+            ->setTitle('GamerMind')
             ->setFaviconPath('/assets/images/favicon.png');
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa-solid fa-home');
+        yield MenuItem::linkToDashboard('Dashboard', 'fa-solid fa-home')->setPermission('ROLE_ADMIN');
         yield MenuItem::linkToCrud('Products', 'fa-solid fa-gamepad', Product::class);
         yield MenuItem::linkToCrud('Reviews', 'fa-solid fa-comment', Review::class);
         yield MenuItem::linkToCrud('Requests', 'fa-solid fa-arrow-up-wide-short', Request::class);
@@ -96,11 +125,11 @@ class DashboardController extends AbstractDashboardController
             }
 
             foreach ($gameReviewsRatings as $rating) {
-                $gameAverageRating =+ $rating;
+                $gameAverageRating += $rating;
             }
 
             if (count($gameReviewsRatings) > 0) {
-                $gameAverageRating += count($gameReviewsRatings);
+                $gameAverageRating = $gameAverageRating / count($gameReviewsRatings);
             } else $gameAverageRating = 5;
 
             array_push($gamesChartData, [$game->getTitle(), $gameReviewsCount, $gameAverageRating, $gameOrdersTotal, $gameOrdersRevenue]);
@@ -153,11 +182,11 @@ class DashboardController extends AbstractDashboardController
             }
 
             foreach ($deviceReviewsRatings as $rating) {
-                $deviceAverageRating =+ $rating;
+                $deviceAverageRating += $rating;
             }
 
             if (count($deviceReviewsRatings) > 0) {
-                $deviceAverageRating += count($deviceReviewsRatings);
+                $deviceAverageRating = $deviceAverageRating / count($deviceReviewsRatings);
             } else $deviceAverageRating = 5;
 
             array_push($devicesChartData, [$device->getTitle(), $deviceReviewsCount, $deviceAverageRating, $deviceOrdersTotal, $deviceOrdersRevenue]);

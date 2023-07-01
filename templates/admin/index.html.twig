@@ -1,5 +1,7 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
+{% block page_title %}Dashboard{% endblock %}
+
 {% block main %}
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -7,17 +9,29 @@
         {{ gc_draw(devicesChart, 'devices') }}
     </script>
     <div class="row">
-        <div class="col-12">
-            <h3>Revenue</h3>
-            <p>{{ revenue }}</p>
+        <div class="col-24">
+            <h2>Statistics</h2>
         </div>
     </div>
-    
     <div class="row">
-        <div id="games" class="col-24"></div>
+        <div class="col-24">
+            <h6>Users: {{ totalUsers }}, Products: {{ totalProducts }}, Reviews: {{ totalReviews }}, Requests: {{ totalRequests }}, Messages: {{ totalMessages }}, Orders: {{ totalOrders }}, Revenue: ${{ totalRevenue }}</h6>
+        </div>
     </div>
-    <hr>
-    <div class="row">
-        <div id="devices" class="col-24"></div>
-    </div>
+    {% if totalGames > 0 or totalDevices > 0 %}
+        <hr>
+    {% endif %}
+    {% if totalGames > 0 %}
+        <div class="row">
+            <div id="games" class="col-24"></div>
+        </div>
+    {% endif %}
+    {% if totalGames > 0  and totalDevices > 0 %}
+        <hr>
+    {% endif %}
+    {% if totalDevices > 0 %}
+        <div class="row">
+            <div id="devices" class="col-24"></div>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -27,7 +27,7 @@
                     {% endfor %}
                 </div>
                 <div class="purchase">
-                    <p class="price">${{ (product.price / 100)|number_format(2, '.', ',') }}</p>
+                    <p class="price">${{ product.price }}</p>
                     <a href="{{ path('app_cart_add', { 'id': product.id }) }}" class="cart-button">Add to cart</a>
                 </div>
             </div>
