@@ -2,19 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Product;
-use App\Entity\Review;
-use App\Entity\Request;
 use App\Entity\User;
-use App\Entity\Message;
 use App\Entity\Order;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use App\Entity\OrderDetails;
+use App\Entity\Review;
+use App\Entity\Message;
+use App\Entity\Product;
+use App\Entity\Request;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Material\BarChart;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -23,7 +25,6 @@ class DashboardController extends AbstractDashboardController
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
-        $this->chartBuilder = $chartBuilder;
     }
 
     #[Route('/admin', name: 'admin')]
@@ -38,11 +39,12 @@ class DashboardController extends AbstractDashboardController
             }
         }
 
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         // return $this->redirect($adminUrlGenerator->setController(ProductCrudController::class)->generateUrl());
         return $this->render('admin/index.html.twig', [
             'revenue' => $revenue,
-            'chart' => $this->createChart()
+            'gamesChart' => $this->createGamesChart(),
+            'devicesChart' => $this->createDevicesChart()
         ]);
     }
 
@@ -64,8 +66,117 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Users', 'fa-solid fa-users', User::class)->setPermission('ROLE_ADMIN');
     }
 
-    private function createChart(): Chart
+    private function createGamesChart(): BarChart
     {
-        // 
+        $games = $this->em->getRepository(Product::class)->findBy(['type' => 'game'], ['type' => 'ASC']);
+        $gamesChartData = [
+            ['Game', 'Reviews', 'Rating', 'Orders', 'Revenue']
+        ];
+
+        foreach ($games as $game) {
+            $gameReviews = $game->getReviews();
+            $gameReviewsCount = count($gameReviews) > 0 ? count($gameReviews) : 0;
+            $gameReviewsRatings = [];
+            $gameAverageRating = 0;
+
+            $gameOrders = $this->em->getRepository(OrderDetails::class)->findBy(['product' => $game->getTitle()], ['product' => 'ASC']);
+            $gameOrdersTotal = 0;
+            $gameOrdersRevenue = 0;
+
+            if (count($gameOrders) > 0) {
+                foreach ($gameOrders as $gameOrder) {
+                    $gameOrdersTotal += $gameOrder->getQuantity();
+                    $gameOrdersRevenue += $gameOrder->getTotalPrice();
+                }
+            }
+
+            foreach ($gameReviews as $review) {
+                $reviewRating = $review->getRating();
+                array_push($gameReviewsRatings, $reviewRating);
+            }
+
+            foreach ($gameReviewsRatings as $rating) {
+                $gameAverageRating =+ $rating;
+            }
+
+            if (count($gameReviewsRatings) > 0) {
+                $gameAverageRating += count($gameReviewsRatings);
+            } else $gameAverageRating = 5;
+
+            array_push($gamesChartData, [$game->getTitle(), $gameReviewsCount, $gameAverageRating, $gameOrdersTotal, $gameOrdersRevenue]);
+        }
+
+        $chart = new BarChart();
+        $chart->getData()->setArrayToDataTable($gamesChartData);
+        $chart->getOptions()
+            ->setTitle('Games')
+            ->setWidth(900)
+            ->setHeight(500)
+            ->setSeries([['axis' => 'Reviews'], ['axis' => 'Rating'], ['axis' => 'Orders'], ['axis' => 'Revenue']])
+            ->setAxes(['x' => [
+                'Reviews' => ['side' => 'top', 'label' => 'Reviews'],
+                'Rating' => ['side' => 'top', 'label' => 'Rating'],
+                'Orders' => ['side' => 'bottom', 'label' => 'Orders'],
+                'Revenue' => ['side' => 'bottom', 'label' => 'Revenue']
+            ]]);
+
+        return $chart;
+    }
+
+    private function createDevicesChart(): BarChart
+    {
+        $devices = $this->em->getRepository(Product::class)->findBy(['type' => 'device'], ['type' => 'ASC']);
+        $devicesChartData = [
+            ['Device', 'Reviews', 'Rating', 'Orders', 'Revenue']
+        ];
+
+        foreach ($devices as $device) {
+            $deviceReviews = $device->getReviews();
+            $deviceReviewsCount = count($deviceReviews) > 0 ? count($deviceReviews) : 0;
+            $deviceReviewsRatings = [];
+            $deviceAverageRating = 0;
+
+            $deviceOrders = $this->em->getRepository(OrderDetails::class)->findBy(['product' => $device->getTitle()], ['product' => 'ASC']);
+            $deviceOrdersTotal = 0;
+            $deviceOrdersRevenue = 0;
+
+            if (count($deviceOrders) > 0) {
+                foreach ($deviceOrders as $deviceOrder) {
+                    $deviceOrdersTotal += $deviceOrder->getQuantity();
+                    $deviceOrdersRevenue += $deviceOrder->getTotalPrice();
+                }
+            }
+
+            foreach ($deviceReviews as $review) {
+                $reviewRating = $review->getRating();
+                array_push($deviceReviewsRatings, $reviewRating);
+            }
+
+            foreach ($deviceReviewsRatings as $rating) {
+                $deviceAverageRating =+ $rating;
+            }
+
+            if (count($deviceReviewsRatings) > 0) {
+                $deviceAverageRating += count($deviceReviewsRatings);
+            } else $deviceAverageRating = 5;
+
+            array_push($devicesChartData, [$device->getTitle(), $deviceReviewsCount, $deviceAverageRating, $deviceOrdersTotal, $deviceOrdersRevenue]);
+        }
+
+        $chart = new BarChart();
+        $chart->getData()->setArrayToDataTable($devicesChartData);
+        $chart->getOptions()
+            ->setTitle('Devices')
+            ->setWidth(900)
+            ->setHeight(500)
+            ->setSeries([['axis' => 'Reviews'], ['axis' => 'Rating'], ['axis' => 'Orders'], ['axis' => 'Revenue']])
+            ->setAxes(['x' => [
+                'Reviews' => ['side' => 'top', 'label' => 'Reviews'],
+                'Rating' => ['side' => 'top', 'label' => 'Rating'],
+                'Orders' => ['side' => 'bottom', 'label' => 'Orders'],
+                'Revenue' => ['side' => 'bottom', 'label' => 'Revenue']
+            ]]);
+
+        return $chart;
     }
 }

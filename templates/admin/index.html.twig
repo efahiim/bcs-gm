@@ -1,13 +1,23 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block main %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_draw(gamesChart, 'games') }}
+        {{ gc_draw(devicesChart, 'devices') }}
+    </script>
     <div class="row">
         <div class="col-12">
             <h3>Revenue</h3>
             <p>{{ revenue }}</p>
         </div>
-        <div class="col-12">
-            {{ render_chart(chart) }}
-        </div>
+    </div>
+    
+    <div class="row">
+        <div id="games" class="col-24"></div>
+    </div>
+    <hr>
+    <div class="row">
+        <div id="devices" class="col-24"></div>
     </div>
 {% endblock %}
