@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -28,7 +29,9 @@ class OrderCrudController extends AbstractCrudController
             TextField::new('reference'),
             TextField::new('delivery_address'),
             DateTimeField::new('ordered_on')->setFormat('short', 'short'),
-            ChoiceField::new('status')->setChoices(Order::getStatusSelection()),
+            TextField::new('paypal_id'),
+            MoneyField::new('total')->setCurrency('USD'),
+            ChoiceField::new('status')->setChoices(Order::getStatusSelection())
         ];
     }
     

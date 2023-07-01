@@ -15,12 +15,10 @@ class Order
 {
     const TYPE_CART = 'Cart';
     const TYPE_PAID = 'Paid';
-    const TYPE_DELIVERED = 'Delivered';
     
     const TYPE_ENUM = [
         self::TYPE_CART,
-        self::TYPE_PAID,
-        self::TYPE_DELIVERED
+        self::TYPE_PAID
     ];
 
     public static function getStatusSelection(): array
@@ -49,11 +47,17 @@ class Order
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $ordered_on = null;
 
-    #[ORM\Column(length: 255, columnDefinition: "ENUM('Cart', 'Paid', 'Delivered')")]
+    #[ORM\Column(length: 255, columnDefinition: "ENUM('Cart', 'Paid')")]
     private ?string $status = null;
 
     #[ORM\OneToMany(mappedBy: 'orderProduct', targetEntity: OrderDetails::class, orphanRemoval: true)]
     private Collection $orderDetails;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $paypalId = null;
+
+    #[ORM\Column]
+    private ?float $total = null;
 
     public function __construct()
     {
@@ -151,6 +155,30 @@ class Order
                 $orderDetail->setOrderProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPaypalId(): ?string
+    {
+        return $this->paypalId;
+    }
+
+    public function setPaypalId(?string $paypalId): static
+    {
+        $this->paypalId = $paypalId;
+
+        return $this;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): static
+    {
+        $this->total = $total;
 
         return $this;
     }

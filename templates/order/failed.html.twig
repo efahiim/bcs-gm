@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+    <!-- CANVAS -->
+    <section class="canvas content">
+        <h1>Order</h1>
+    </section>
+    <!-- CANVAS END -->
+
+    <!-- MAIN -->
+    <main>
+        <div class="message-button">
+            <h2 class="order-number">There was a problem processing your order number <span>{{ order.reference }}</span>.</h2>
+        </div>
+    </main>
+    <!-- MAIN END -->
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Order{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+    <!-- CANVAS -->
+    <section class="canvas content">
+        <h1>Order</h1>
+    </section>
+    <!-- CANVAS END -->
+
+    <!-- MAIN -->
+    <main>
+        <div class="message-button">
+            <h2 class="order-number">Your order number <span>{{ order.reference }}</span> has been placed.</h2>
+            <a href="{{ path('app_orders') }}" class="cart-button">View your orders</a>
+        </div>
+    </main>
+    <!-- MAIN END -->
+{% endblock %}

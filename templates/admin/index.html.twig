@@ -1,0 +1,13 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <h3>Revenue</h3>
+            <p>{{ revenue }}</p>
+        </div>
+        <div class="col-12">
+            {{ render_chart(chart) }}
+        </div>
+    </div>
+{% endblock %}

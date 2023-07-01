@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Orders{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+    <!-- CANVAS -->
+    <section class="canvas content">
+        <h1>Orders</h1>
+    </section>
+    <!-- CANVAS END -->
+
+    <!-- MAIN -->
+    <main>
+        {% if orders|length > 0 %}
+            <div class="user-orders">
+                {% for order in orders %}
+                    <div class="user-order">
+                        <div class="user-order-number">{{ loop.index }}</div>
+                        <div class="user-order-info">
+                            <p><span class="red-span">Reference:</span> {{ order.reference }}</p>
+                            <p><span class="red-span">Delivery address:</span> {{ order.deliveryAddress }}</p>
+                            <p><span class="red-span">Ordered on:</span> {{ order.orderedOn|format_datetime('short', 'none') }}</p>
+                            <p><span class="red-span">Total paid:</span> ${{ (order.total / 100)|number_format(2, '.', ',') }}</p>
+                        </div>
+                        <div  class="user-order-details">
+                            <p><span class="red-span">Items</span></p>
+                            <ul>
+                                {% for orderDetails in order.orderDetails %}
+                                    <li>{{ orderDetails.quantity }}x {{ orderDetails.product }} at ${{ (orderDetails.price / 100)|number_format(2, '.', ',') }}/unit (${{ (orderDetails.totalPrice / 100)|number_format(2, '.', ',') }})</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-cart">
+                <p>You do not have any orders yet.</p>
+                <a href="{{ path('app_products') }}" class="cart-button">Go to shop</a>
+            </div>
+        {% endif %}
+    </main>
+    <!-- MAIN END -->
+{% endblock %}

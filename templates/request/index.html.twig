@@ -13,7 +13,7 @@
 
     <!-- MAIN -->
     <main>
-        {% if requests %}
+        {% if requests|length > 0 %}
             <div class="user-requests">
                 {% for request in requests %}
                     <div class="request">
@@ -28,7 +28,9 @@
                         {% endif %}
                     </div>
                 {% endfor %}
-            </div>  
+            </div>
+        {% else %}
+            <p>You did not make any request yet.</p>
         {% endif %}
         {{ form_start(form) }}
             <div class="security-form alt-width">

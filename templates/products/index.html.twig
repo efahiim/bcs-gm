@@ -14,7 +14,7 @@
     <!-- MAIN -->
     <main>
         {% if games %}
-            <h2>Games</h2>
+            <h2 id="games">Games</h2>
 
             <div class="product-catalog">
                 {% for game in games %}
@@ -32,7 +32,7 @@
         {% endif %}
         
         {% if devices %}
-            <h2>Devices</h2>
+            <h2 id="devices">Devices</h2>
 
             <div class="product-catalog">
                 {% for device in devices %}
