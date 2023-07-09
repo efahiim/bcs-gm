@@ -23,7 +23,7 @@
                     {% set numberOfItems = numberOfItems + item.quantity %}
                     <div class="cart-item">
                         <a href="{{ path('app_product', { 'id': item.product.id }) }}" class="cart-anchor">
-                            <img src="{{ vich_uploader_asset(item.product, 'imageFile') }}" alt="{{ item.product.title }}" width="150">
+                            <img src="{{ item.product.image ? vich_uploader_asset(item.product, 'imageFile') : asset('assets/images/default.jpg') }}" alt="{{ item.product.title }}" width="150">
                         </a>
                         <p>{{ item.product.title }}</p>
                         <p>${{ totalPerItem }}</p>

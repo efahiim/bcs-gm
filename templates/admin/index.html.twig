@@ -10,12 +10,17 @@
     </script>
     <div class="row">
         <div class="col-24">
-            <h3>Statistics</h3>
+            <h4>Revenue: ${{ totalRevenue }}</h4>
         </div>
     </div>
     <div class="row">
         <div class="col-24">
-            <h6>Users: {{ totalUsers }}, Products: {{ totalProducts }}, Reviews: {{ totalReviews }}, Requests: {{ totalRequests }}, Messages: {{ totalMessages }}, Orders: {{ totalOrders }}, Revenue: ${{ totalRevenue }}</h6>
+            <h4>Statistics</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-24">
+            <h6>Users: {{ totalUsers }}, Products: {{ totalProducts }}, Reviews: {{ totalReviews }}, Requests: {{ totalRequests }}, Messages: {{ totalMessages }}, Orders: {{ totalOrders }}</h6>
         </div>
     </div>
     {% if totalGames > 0 or totalDevices > 0 %}

@@ -15,10 +15,14 @@ class Order
 {
     const TYPE_CART = 'Cart';
     const TYPE_PAID = 'Paid';
+    const TYPE_DELIVERED = 'Delivered';
+    const TYPE_CANCELLED = 'Cancelled';
     
     const TYPE_ENUM = [
         self::TYPE_CART,
-        self::TYPE_PAID
+        self::TYPE_PAID,
+        self::TYPE_DELIVERED,
+        self::TYPE_CANCELLED
     ];
 
     public static function getStatusSelection(): array
@@ -47,7 +51,7 @@ class Order
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $ordered_on = null;
 
-    #[ORM\Column(length: 255, columnDefinition: "ENUM('Cart', 'Paid')")]
+    #[ORM\Column(length: 255, columnDefinition: "ENUM('Cart', 'Paid', 'Delivered', 'Cancelled')")]
     private ?string $status = null;
 
     #[ORM\OneToMany(mappedBy: 'orderProduct', targetEntity: OrderDetails::class, orphanRemoval: true)]

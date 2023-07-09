@@ -17,7 +17,7 @@ class MessageFormType extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Type your message',
+                    'placeholder' => 'Type your message...',
                     'autocomplete' => 'off'
                 ]
             ])

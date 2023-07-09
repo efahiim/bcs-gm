@@ -20,19 +20,25 @@ class RegistrationController extends AbstractController
         $user->setRoles([
             'ROLE_USER'
         ]);
-        $user->setLocked(false);
+        $user->setLocked(0);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                    $form->get('plainPassword')->getData()
-            );
+            $existingUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $form->get('username')->getData()]);
 
-            $entityManager->persist($user);
-            $entityManager->flush();
+            if (!$existingUser) {
+                $user->setPassword(
+                        $form->get('plainPassword')->getData()
+                );
 
-            return $this->redirectToRoute('app_login');
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_login');
+            } else {
+                $this->addFlash('notice', 'This username is already taken.');
+            }
         }
 
         return $this->render('registration/register.html.twig', [

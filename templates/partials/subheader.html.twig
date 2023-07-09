@@ -23,7 +23,7 @@
 					{% for game in games %}
 						<div class="poster">
 							<div class="poster-img">
-								<img src="{{ vich_uploader_asset(game, 'imageFile') }}" alt="{{ game.title }}">
+								<img src="{{ game.image ? vich_uploader_asset(game, 'imageFile') : asset('assets/images/default.jpg') }}" alt="{{ game.title }}">
 							</div>
 							<a href="/products/{{ game.id }}">{{ game.title }}</a>
 						</div>

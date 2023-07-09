@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ProductCrudController extends AbstractCrudController
@@ -30,6 +31,7 @@ class ProductCrudController extends AbstractCrudController
                 ->setFormTypeOption('required', false),
             MoneyField::new('price')->setCurrency('USD'),
             ChoiceField::new('type')->setChoices(Product::getTypeChoice()),
+            IntegerField::new('stock'),
         ];
     }
 }

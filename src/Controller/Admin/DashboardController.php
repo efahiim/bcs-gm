@@ -140,7 +140,7 @@ class DashboardController extends AbstractDashboardController
         $chart->getOptions()
             ->setTitle('Games')
             ->setWidth(900)
-            ->setHeight(500)
+            ->setHeight(800)
             ->setSeries([['axis' => 'Reviews'], ['axis' => 'Rating'], ['axis' => 'Orders'], ['axis' => 'Revenue']])
             ->setAxes(['x' => [
                 'Reviews' => ['side' => 'top', 'label' => 'Reviews'],

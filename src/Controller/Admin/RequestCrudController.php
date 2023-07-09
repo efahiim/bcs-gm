@@ -48,7 +48,6 @@ class RequestCrudController extends AbstractCrudController
             ->linkToCrudAction('approveAction')
             ->displayIf(static function (Request $request) {
                 $requestStatus = $request->getStatus();
-                $condition = $requestStatus == 'Pending' or $requestStatus == 'Rejected';
                 if ($requestStatus == 'Pending' or $requestStatus == 'Rejected') {
                     return true;
                 } elseif ($requestStatus == 'Approved') {

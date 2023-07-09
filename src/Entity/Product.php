@@ -54,6 +54,9 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Review::class)]
     private Collection $reviews;
 
+    #[ORM\Column]
+    private ?int $stock = null;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -117,7 +120,7 @@ class Product
 
     public function setPrice(float $price): self
     {
-        $this->price = $price / 100;
+        $this->price = $price;
 
         return $this;
     }
@@ -162,5 +165,22 @@ class Product
         }
 
         return $this;
+    }
+
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
+
+    public function setStock(int $stock): static
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 }

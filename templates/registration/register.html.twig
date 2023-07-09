@@ -15,6 +15,9 @@
     <main>
         {{ form_start(registrationForm) }}
             <div class="security-form">
+                {% for notice in app.flashes('notice') %}
+                    <div class="security-message"><span>{{ notice }}</span></div>
+                {% endfor %}
                 <div class="form-row">{{ form_row(registrationForm.username) }}</div>
                 <div class="form-row">{{ form_row(registrationForm.email) }}</div>
                 <div class="form-row">

@@ -30,6 +30,7 @@
                                     <li>{{ orderDetails.quantity }}x {{ orderDetails.product }} at ${{ orderDetails.price }}/unit (${{ orderDetails.totalPrice }})</li>
                                 {% endfor %}
                             </ul>
+                             <p><span class="red-span">Status:</span> {{ order.status }}</p>
                         </div>
                     </div>
                 {% endfor %}

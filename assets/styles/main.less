@@ -699,7 +699,9 @@ main {
     }
 
     @media @medium {
-      width: auto;
+      img {
+        width: 270px;
+      }
     }
 
     @media @large {
@@ -908,6 +910,10 @@ main {
         label {
           margin-bottom: 10px;
         }
+      }
+
+      div ul li {
+        color: @mainColor;
       }
 
       input[type=text] {
@@ -1133,6 +1139,10 @@ main {
       font-family: lesserFont;
       font-size: 1rem;
     }
+
+    ul li {
+      color: @mainColor;
+    }
   }
 
   .form-row.inverse-flex div {
@@ -1145,6 +1155,7 @@ main {
 
   .form-row.alt-flex {
     flex-direction: row;
+    align-items: flex-end;
 
     & > div {
       margin: 0;
@@ -1158,6 +1169,7 @@ main {
       justify-content: center;
       align-items: center;
       width: 45px;
+      height: 39px;
     }
   }
 
