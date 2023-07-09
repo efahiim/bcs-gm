@@ -63,10 +63,4 @@ class HomeController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
-    #[Route('/contact', name: 'app_contact')]
-    public function contact(): Response
-    {
-        return $this->render('contact/index.html.twig');
-    }
 }

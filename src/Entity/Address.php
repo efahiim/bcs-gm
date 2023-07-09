@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
@@ -14,21 +15,43 @@ class Address
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Your first name cannot contain a number.',    
+    )]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Your first name cannot contain a number.',    
+    )]
     private ?string $lastName = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Type('string')]
     private ?string $street = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Your city cannot contain a number.',    
+    )]
     private ?string $city = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Type('string')]
     private ?string $zipCode = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Your country cannot contain a number.',    
+    )]
     private ?string $country = null;
 
     #[ORM\OneToOne(inversedBy: 'address', cascade: ['persist', 'remove'])]

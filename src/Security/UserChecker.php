@@ -15,8 +15,6 @@ class UserChecker implements UserCheckerInterface
             return;
         }
 
-        // dd($user->isLocked());
-
         if ($user->isLocked()) {
             throw new CustomUserMessageAuthenticationException(
                 'This account is locked.'
