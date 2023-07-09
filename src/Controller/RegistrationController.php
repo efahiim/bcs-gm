@@ -25,20 +25,14 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $existingUser = $entityManager->getRepository(User::class)->findOneBy(['username' => $form->get('username')->getData()]);
+            $user->setPassword(
+                    $form->get('plainPassword')->getData()
+            );
 
-            if (!$existingUser) {
-                $user->setPassword(
-                        $form->get('plainPassword')->getData()
-                );
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-                $entityManager->persist($user);
-                $entityManager->flush();
-
-                return $this->redirectToRoute('app_login');
-            } else {
-                $this->addFlash('notice', 'This username is already taken.');
-            }
+            return $this->redirectToRoute('app_login'); 
         }
 
         return $this->render('registration/register.html.twig', [

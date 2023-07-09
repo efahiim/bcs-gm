@@ -27,8 +27,12 @@
                     {% endfor %}
                 </div>
                 <div class="purchase">
-                    <p class="price">${{ product.price }}</p>
-                    <a href="{{ path('app_cart_add', { 'id': product.id }) }}" class="cart-button">Add to cart</a>
+                    <p class="price">${{ (product.price / 100)|number_format(2, '.', ',') }}</p>
+                    {% if product.stock > 0 %}
+                        <a href="{{ path('app_cart_add', { 'id': product.id }) }}" class="cart-button">Add to cart</a>
+                    {% else %}
+                        <p class="no-stock">Out of stock</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

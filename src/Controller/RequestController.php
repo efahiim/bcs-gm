@@ -31,7 +31,6 @@ class RequestController extends AbstractController
         $newRequest = new RequestEntity();
         $newRequest->setStatus('Pending');
         $newRequest->setUser($user);
-        $newRequest->setRequestedBy($user->getUsername());
         $form = $this->createForm(RequestFormType::class, $newRequest);
 
         $form->handleRequest($request);

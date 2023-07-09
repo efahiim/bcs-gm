@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[Vich\Uploadable]
@@ -34,6 +35,7 @@ class Product
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -46,15 +48,18 @@ class Product
     private ?File $imageFile = null;
 
     #[ORM\Column]
+    #[Assert\Positive]
     private ?float $price = null;
 
     #[ORM\Column(length: 255, columnDefinition: "ENUM('Game', 'Device')")]
-    private ?string $type = null;
+    #[Assert\NotBlank]
+    private ?string $type = 'Game';
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Review::class)]
     private Collection $reviews;
 
     #[ORM\Column]
+    #[Assert\PositiveOrZero]
     private ?int $stock = null;
 
     public function __construct()

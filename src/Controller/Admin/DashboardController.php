@@ -47,8 +47,8 @@ class DashboardController extends AbstractDashboardController
         $totalRevenue = 0;
 
         foreach ($orders as $order) {
-            if ($order->getStatus() === 'Paid') {
-                $totalOrders += 1;
+            $totalOrders += 1;
+            if ($order->getStatus() === 'Delivered') {
                 $totalRevenue += $order->getTotal();
             }
         }
@@ -114,8 +114,10 @@ class DashboardController extends AbstractDashboardController
 
             if (count($gameOrders) > 0) {
                 foreach ($gameOrders as $gameOrder) {
-                    $gameOrdersTotal += $gameOrder->getQuantity();
-                    $gameOrdersRevenue += $gameOrder->getTotalPrice();
+                    if ($gameOrder->getOrderProduct()->getStatus() === 'Delivered') {
+                        $gameOrdersTotal += $gameOrder->getQuantity();
+                        $gameOrdersRevenue += $gameOrder->getTotalPrice();
+                    }
                 }
             }
 
@@ -132,7 +134,7 @@ class DashboardController extends AbstractDashboardController
                 $gameAverageRating = $gameAverageRating / count($gameReviewsRatings);
             } else $gameAverageRating = 5;
 
-            array_push($gamesChartData, [$game->getTitle(), $gameReviewsCount, $gameAverageRating, $gameOrdersTotal, $gameOrdersRevenue]);
+            array_push($gamesChartData, [$game->getTitle(), $gameReviewsCount, $gameAverageRating, $gameOrdersTotal, $gameOrdersRevenue / 100]);
         }
 
         $chart = new BarChart();

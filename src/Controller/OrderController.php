@@ -121,12 +121,12 @@ class OrderController extends AbstractController
                 'name' => $product->getProduct(),
                 'quantity' => $product->getQuantity(),
                 'unit_amount' => [
-                    'value' => $product->getPrice(),
+                    'value' => $product->getPrice() / 100,
                     'currency_code' => 'USD'
                 ]
             ];
 
-            $itemTotal += $product->getPrice() * $product->getQuantity();
+            $itemTotal += ($product->getPrice() / 100) * $product->getQuantity();
         }
 
         $request = new OrdersCreateRequest();

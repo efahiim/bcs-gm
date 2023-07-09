@@ -30,7 +30,6 @@ class UserCrudController extends AbstractCrudController
             TextField::new('password')
                      ->setColumns(4)
                      ->setFormType(PasswordType::class)
-                     ->setRequired(false)
                      ->hideOnIndex(),
             ChoiceField::new('roles')
                 ->setChoices([
@@ -46,7 +45,8 @@ class UserCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            ->remove(Crud::PAGE_DETAIL, Action::DELETE)
+            ->remove(Crud::PAGE_DETAIL, Action::EDIT)
         ;
     }
 }

@@ -38,9 +38,6 @@ class Request
     #[ORM\Column(length: 255, columnDefinition: "ENUM('Pending', 'Approved', 'Rejected')")]
     private ?string $status = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $requestedBy = null;
-
     #[ORM\ManyToOne(inversedBy: 'requests')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
@@ -70,18 +67,6 @@ class Request
     public function setStatus(string $status): self
     {
         $this->status = $status;
-
-        return $this;
-    }
-
-    public function getRequestedBy(): ?string
-    {
-        return $this->requestedBy;
-    }
-
-    public function setRequestedBy(string $requestedBy): static
-    {
-        $this->requestedBy = $requestedBy;
 
         return $this;
     }

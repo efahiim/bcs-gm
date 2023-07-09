@@ -10,7 +10,7 @@
     </script>
     <div class="row">
         <div class="col-24">
-            <h4>Revenue: ${{ totalRevenue }}</h4>
+            <h4>Revenue: ${{ (totalRevenue / 100)|number_format(2, '.', ',') }}</h4>
         </div>
     </div>
     <div class="row">
