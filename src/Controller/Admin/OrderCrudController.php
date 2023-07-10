@@ -4,19 +4,20 @@ namespace App\Controller\Admin;
 
 use App\Entity\Order;
 use App\Entity\Product;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class OrderCrudController extends AbstractCrudController
 {
@@ -40,7 +41,8 @@ class OrderCrudController extends AbstractCrudController
             IdField::new('id')->setFormTypeOption('disabled','disabled'),
             AssociationField::new('user')->setFormTypeOption('disabled','disabled'),
             TextField::new('reference')->setFormTypeOption('disabled','disabled'),
-            AssociationField::new('orderDetails')->setFormTypeOption('disabled','disabled'),
+            // AssociationField::new('orderDetails')->setFormTypeOption('disabled','disabled'),
+            ArrayField::new('orderDetails')->hideOnForm(),
             TextField::new('delivery_address')->setFormTypeOption('disabled','disabled'),
             DateTimeField::new('ordered_on')->setFormat('short', 'short')->setFormTypeOption('disabled','disabled'),
             TextField::new('paypal_id')->setFormTypeOption('disabled','disabled'),
@@ -82,16 +84,6 @@ class OrderCrudController extends AbstractCrudController
 
         if ($order instanceof Order) {
             $order->setStatus('Delivered');
-            $orderDetails = $order->getOrderDetails();
-
-            foreach ($orderDetails as $item) {
-                $product = $this->em->getRepository(Product::class)->findOneBy(['title' => $item->getProduct()]);
-                $productStock = $product->getStock();
-                $product->setStock($productStock - $item->getQuantity());
-
-                $this->em->persist($product);
-            }
-            
             $this->em->flush();
         }
 
@@ -109,6 +101,16 @@ class OrderCrudController extends AbstractCrudController
 
         if ($order instanceof Order) {
             $order->setStatus('Cancelled');
+            $orderDetails = $order->getOrderDetails();
+
+            foreach ($orderDetails as $item) {
+                $product = $this->em->getRepository(Product::class)->findOneBy(['title' => $item->getProduct()]);
+                $productStock = $product->getStock();
+                $product->setStock($productStock + $item->getQuantity());
+
+                $this->em->persist($product);
+            }
+
             $this->em->flush();
         }
 

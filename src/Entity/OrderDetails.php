@@ -93,4 +93,12 @@ class OrderDetails
 
         return $this;
     }
+
+    public function __toString()
+    {
+        $name = $this->product;
+        $quantity = $this->quantity;
+        $concat = $quantity . 'x ' . $name;
+        return $concat;
+    }
 }

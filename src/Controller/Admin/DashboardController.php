@@ -191,7 +191,7 @@ class DashboardController extends AbstractDashboardController
                 $deviceAverageRating = $deviceAverageRating / count($deviceReviewsRatings);
             } else $deviceAverageRating = 5;
 
-            array_push($devicesChartData, [$device->getTitle(), $deviceReviewsCount, $deviceAverageRating, $deviceOrdersTotal, $deviceOrdersRevenue]);
+            array_push($devicesChartData, [$device->getTitle(), $deviceReviewsCount, $deviceAverageRating, $deviceOrdersTotal, $deviceOrdersRevenue / 100]);
         }
 
         $chart = new BarChart();

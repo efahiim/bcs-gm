@@ -26,7 +26,7 @@ class Address
     #[Assert\Regex(
         pattern: '/\d/',
         match: false,
-        message: 'Your first name cannot contain a number.',    
+        message: 'Your last name cannot contain a number.',    
     )]
     private ?string $lastName = null;
 

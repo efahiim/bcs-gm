@@ -14,25 +14,34 @@
     <main>
         {% if orders|length > 0 %}
             <div class="user-orders">
+                {% set loopCount = null %}
                 {% for order in orders %}
-                    <div class="user-order">
-                        <div class="user-order-number">{{ loop.index }}</div>
-                        <div class="user-order-info">
-                            <p><span class="red-span">Reference:</span> {{ order.reference }}</p>
-                            <p><span class="red-span">Delivery address:</span> {{ order.deliveryAddress }}</p>
-                            <p><span class="red-span">Ordered on:</span> {{ order.orderedOn|format_datetime('short', 'none') }}</p>
-                            <p><span class="red-span">Total paid:</span> ${{ (order.total / 100)|number_format(2, '.', ',') }}</p>
+                    {% if order.status == 'Paid' or order.status == 'Delivered' or order.status == 'Cancelled' %}
+                        {% set loopCount = loopCount + 1 %}
+                        <div class="user-order">
+                            <div class="user-order-number">{{ loopCount }}</div>
+                            <div class="user-order-info">
+                                <p><span class="red-span">Reference:</span> {{ order.reference }}</p>
+                                <p><span class="red-span">Delivery address:</span> {{ order.deliveryAddress }}</p>
+                                <p><span class="red-span">Ordered on:</span> {{ order.orderedOn|format_datetime('short', 'none') }}</p>
+                                <p><span class="red-span">Total paid:</span> ${{ (order.total / 100)|number_format(2, '.', ',') }}</p>
+                            </div>
+                            <div  class="user-order-details">
+                                <p><span class="red-span">Items</span></p>
+                                <ul>
+                                    {% for orderDetails in order.orderDetails %}
+                                        <li>{{ orderDetails.quantity }}x {{ orderDetails.product }} at ${{ (orderDetails.price / 100)|number_format(2, '.', ',') }}/unit (${{ (orderDetails.totalPrice / 100)|number_format(2, '.', ',') }})</li>
+                                    {% endfor %}
+                                </ul>
+                                <p><span class="red-span">Status:</span> {{ order.status }}</p>
+                            </div>
                         </div>
-                        <div  class="user-order-details">
-                            <p><span class="red-span">Items</span></p>
-                            <ul>
-                                {% for orderDetails in order.orderDetails %}
-                                    <li>{{ orderDetails.quantity }}x {{ orderDetails.product }} at ${{ (orderDetails.price / 100)|number_format(2, '.', ',') }}/unit (${{ (orderDetails.totalPrice / 100)|number_format(2, '.', ',') }})</li>
-                                {% endfor %}
-                            </ul>
-                             <p><span class="red-span">Status:</span> {{ order.status }}</p>
+                    {% else %}
+                        <div class="empty-cart">
+                            <p>You do not have any orders yet.</p>
+                            <a href="{{ path('app_products') }}" class="cart-button">Go to shop</a>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% else %}

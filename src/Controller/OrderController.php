@@ -121,7 +121,7 @@ class OrderController extends AbstractController
                 'name' => $product->getProduct(),
                 'quantity' => $product->getQuantity(),
                 'unit_amount' => [
-                    'value' => $product->getPrice() / 100,
+                    'value' => strval($product->getPrice() / 100),
                     'currency_code' => 'USD'
                 ]
             ];
@@ -129,21 +129,40 @@ class OrderController extends AbstractController
             $itemTotal += ($product->getPrice() / 100) * $product->getQuantity();
         }
 
+        $customer = $order->getUser();
+        $customerAddress = $customer->getAddress();
+        $customerFirstName = $customerAddress->getFirstName();
+        $customerLastName = $customerAddress->getLastName();
+        $customerStreet = $customerAddress->getStreet();
+        $customerCity = $customerAddress->getCity();
+        $customerZipCode = $customerAddress->getZipCode();
+        $customerCountry = $customerAddress->getCountry();
+
         $request = new OrdersCreateRequest();
         $request->prefer('return=representation');
-        $request->body = [
+        $paypalBody = [
             'intent' => 'CAPTURE',
             'purchase_units' => [
                 [
                     'amount' => [
                         'currency_code' => 'USD',
-                        'value' => $itemTotal,
+                        'value' => strval($itemTotal),
                         'breakdown' => [
                             'item_total' => [
                                 'currency_code' => 'USD',
-                                'value' => $itemTotal,
+                                'value' => strval($itemTotal),
                             ],
                             'shipping' => [
+                                'name' => [
+                                    'given_name' => $customerFirstName,
+                                    'surname' => $customerLastName,
+                                ],
+                                'address' => [
+                                    'address_line_1' => $customerStreet,
+                                    'admin_area_1' => $customerCity,
+                                    'postal_code' => $customerZipCode,
+                                    'country_code' => $customerCountry,
+                                ],
                                 'currency_code' => 'USD',
                                 'value' => 0,
                             ]
@@ -153,10 +172,13 @@ class OrderController extends AbstractController
                 ]
             ],
             'application_context' => [
+                'shipping_preference' => 'NO_SHIPPING',
                 'return_url' => $this->urlGenerator->generate('payment_success', ['reference' => $order->getReference()], UrlGeneratorInterface::ABSOLUTE_URL),
                 'cancel_url' => $this->urlGenerator->generate('payment_failed', ['reference' => $order->getReference()], UrlGeneratorInterface::ABSOLUTE_URL)
             ]
         ];
+
+        $request->body = $paypalBody;
 
         $client = $this->getPaypalClient();
         $response = $client->execute($request);
@@ -196,6 +218,16 @@ class OrderController extends AbstractController
         }
 
         $order->setStatus('Paid');
+        $orderDetails = $order->getOrderDetails();
+
+        foreach ($orderDetails as $item) {
+            $product = $this->em->getRepository(Product::class)->findOneBy(['title' => $item->getProduct()]);
+            $productStock = $product->getStock();
+            $product->setStock($productStock - $item->getQuantity());
+
+            $this->em->persist($product);
+        }
+
         $cartService->clearCart();
 
         $this->em->flush();
@@ -213,6 +245,10 @@ class OrderController extends AbstractController
         if (!$order || $order->getUser() !== $this->getUser()) {
             return $this->redirectToRoute('app_cart');
         }
+
+        $order->setStatus('Cancelled');
+
+        $this->em->flush();
 
         return $this->render('order/failed.html.twig', [
             'order' => $order
