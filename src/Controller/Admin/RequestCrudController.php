@@ -85,7 +85,8 @@ class RequestCrudController extends AbstractCrudController
         $newProduct
             ->setTitle($userRequest->getTitle())
             ->setPrice(0)
-            ->setType('Game');
+            ->setType('Game')
+            ->setStock(0);
 
         $this->em->persist($newProduct);
         $this->em->flush();

@@ -34,7 +34,7 @@ class Message
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reply = null;
 
-    #[Gedmo\Timestampable(on: 'update')]
+    #[Gedmo\Timestampable(on: 'change', field: ['reply'])]
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $replied_at = null;
 
