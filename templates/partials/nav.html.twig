@@ -36,6 +36,7 @@
 					{% if app.user %}
 						<ul>
 							<li><a href="{{ path('app_account', { 'username': app.user.username }) }}" class="{{ current_route == 'app_account' ? 'active' : '' }}">Profile</a></li>
+							<li><a href="{{ path('app_change_password') }}" class="{{ current_route == 'app_change_password' ? 'active' : '' }}">Change Password</a></li>
 							<li><a href="{{ path('app_orders') }}" class="{{ current_route == 'app_orders' ? 'active' : '' }}">Orders</a></li>
 							<li><a href="{{ path('app_requests') }}" class="{{ current_route == 'app_requests' ? 'active' : '' }}">Requests</a></li>
 							<li><a href="{{ path('app_messages') }}" class="{{ current_route == 'app_messages' ? 'active' : '' }}">Messages</a></li>

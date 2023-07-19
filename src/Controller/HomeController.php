@@ -23,7 +23,7 @@ class HomeController extends AbstractController
         $this->security = $security;
     }
 
-    #[Route('/', methods: ['GET'], name: 'app_home')]
+    #[Route('/', name: 'app_home', methods: ['GET'])]
     public function index(): Response
     {
         $repository = $this->em->getRepository(Product::class);
