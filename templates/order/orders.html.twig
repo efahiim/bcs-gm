@@ -36,11 +36,6 @@
                                 <p><span class="red-span">Status:</span> {{ order.status }}</p>
                             </div>
                         </div>
-                    {% else %}
-                        <div class="empty-cart">
-                            <p>You do not have any orders yet.</p>
-                            <a href="{{ path('app_products') }}" class="cart-button">Go to shop</a>
-                        </div>
                     {% endif %}
                 {% endfor %}
             </div>
